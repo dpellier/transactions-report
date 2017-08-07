@@ -1,0 +1,15 @@
+<div class="input-file">
+    <input class="input-file__input"
+           id="input-file_{{::$id}}"
+           type="file"
+           accept="{{$ctrl.accept}}" />
+
+    <label for="input-file_{{::$id}}"
+           class="input-file__label">
+        <span class="input-file__label__icon icon-file"></span>
+
+        <span class="input-file__label__text">
+            {{::$ctrl.placeholder || 'Select a file'}}
+        </span>
+    </label>
+</div>

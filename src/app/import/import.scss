@@ -1,0 +1,47 @@
+
+@import '../common/styles/animations';
+
+.import {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+
+    &__file {
+        &__success {
+            @extend %success-animation;
+            margin: auto;
+            padding-left: 6px;
+            width: 45px;
+            height: 30px;
+            vertical-align: middle;
+            box-sizing: border-box;
+        }
+
+        &__message {
+            margin-left: 4px;
+            vertical-align: middle;
+        }
+    }
+
+    &__validating {
+        margin-top: 20px;
+
+        &__progress {
+            display: inline-block;
+            width: 45px;
+            height: 30px;
+            vertical-align: middle;
+
+            &__animation {
+                margin-top: 8px;
+                margin-left: 16px;
+            }
+        }
+
+        &__message {
+            margin-left: 4px;
+            vertical-align: middle;
+        }
+    }
+}

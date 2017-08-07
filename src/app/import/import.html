@@ -1,0 +1,31 @@
+<div class="import">
+    <div ng-if="controller.isOnInitialState()">
+        <input-file ng-model="controller.file"
+                    ng-change="controller.onFileUpload()"
+                    accept=".csv"
+                    placeholder="Select a csv file">
+        </input-file>
+    </div>
+
+    <div ng-if="controller.isOnUploadedState()">
+        <div class="import__file">
+            <svg class="import__file__success">
+                <polyline points="5,15 15,25 30,5" />
+            </svg>
+
+            <span class="import__file__message">
+                File successfully uploaded.
+            </span>
+        </div>
+
+        <div class="import__validating">
+            <div class="import__validating__progress">
+                <div class="import__validating__progress__animation dot-animation"></div>
+            </div>
+
+            <span class="import__validating__message">
+                Validation in progress.
+            </span>
+        </div>
+    </div>
+</div>

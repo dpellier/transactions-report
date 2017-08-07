@@ -1,0 +1,52 @@
+
+@import '../../styles/colors';
+
+$border-color: $dodger-blue;
+$hover-color: $cerulean;
+$icon-color: $dodger-blue;
+$label-color: $deep-cerulean;
+
+.input-file {
+    display: inline-block;
+    transition: border-color ease .3s;
+    border: solid 2px $border-color;
+    border-radius: 5px;
+
+    &:hover {
+        border-color: $hover-color;
+    }
+
+    &:hover &__icon {
+        color: $hover-color;
+    }
+
+    &__input {
+        position: absolute;
+        opacity: 0;
+        z-index: -1;
+        width: .1px;
+        height: .1px;
+        overflow: hidden;
+    }
+
+    &__label {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        width: 160px;
+        height: 160px;
+
+        &__icon {
+            transition: color ease .3s;
+            color: $icon-color;
+            font-size: 38px;
+        }
+
+        &__text {
+            margin-top: 24px;
+            color: $label-color;
+        }
+    }
+}

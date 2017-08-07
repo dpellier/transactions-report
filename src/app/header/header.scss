@@ -1,0 +1,13 @@
+
+@import '../common/styles/colors';
+
+$header-background-color: $gallery;
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $header-background-color;
+    height: 100%;
+    font-size: 18px;
+}

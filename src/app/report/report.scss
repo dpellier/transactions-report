@@ -1,0 +1,82 @@
+
+@import '../common/styles/colors';
+
+$border-color: $dodger-blue;
+$hover-color: $cerulean;
+$success-color: $mantis;
+$error-color: $punch;
+$action-text-color: $white;
+
+.report {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+
+    &__summary {
+        flex: .8;
+        border: solid 2px $border-color;
+        border-radius: 5px;
+        padding: 6px 12px;
+        line-height: 24px;
+
+        &__total {
+            font-weight: bold;
+        }
+
+        &__error,
+        &__success {
+            &__icon,
+            &__text {
+                vertical-align: middle;
+            }
+        }
+
+        &__success {
+            &__icon {
+                color: $success-color;
+            }
+        }
+
+        &__error {
+            &__icon {
+                color: $error-color;
+            }
+        }
+    }
+
+    &__actions {
+        display: flex;
+        flex: .2;
+        align-items: center;
+        justify-content: center;
+
+        &__back {
+            display: inline-block;
+            transition: background-color ease .3s;
+            border: solid 1px transparent;
+            border-radius: 5px;
+            background-color: $border-color;
+            padding: 6px 12px;
+            text-align: center;
+            color: $action-text-color;
+            font-size: 14px;
+
+            &:hover {
+                background-color: $hover-color;
+            }
+        }
+    }
+
+    &__details {
+        margin-top: 20px;
+        border: solid 2px $error-color;
+        border-radius: 5px;
+        padding: 6px 12px;
+        width: 100%;
+        line-height: 24px;
+
+        &__title {
+            font-weight: bold;
+        }
+    }
+}

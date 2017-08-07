@@ -1,0 +1,42 @@
+<div class="report">
+    <div class="report__summary">
+        <div class="report__summary__total">
+            Number of rows treated: {{::controller.report.total}}
+        </div>
+
+        <div class="report__summary__success">
+            <em class="report__summary__success__icon icon-success"></em>
+
+            <span class="report__summary__success__text">
+                Number of rows validated: {{::controller.report.ok.length}}
+            </span>
+        </div>
+
+        <div class="report__summary__error">
+            <em class="report__summary__error__icon icon-error"></em>
+
+            <span class="report__summary__error__text">
+                Number of rows in error: {{::controller.report.ko.length}}
+            </span>
+        </div>
+    </div>
+
+    <div class="report__actions">
+        <button class="report__actions__back"
+                ng-click="controller.back()">
+            New report
+        </button>
+    </div>
+
+    <div class="report__details"
+         ng-if="::controller.report.ko.length">
+        <div class="report__details__title">
+            Error details:
+        </div>
+
+        <div class="report__details__error"
+             ng-repeat="ko in controller.report.ko">
+            {{::ko.getError()}}
+        </div>
+    </div>
+</div>

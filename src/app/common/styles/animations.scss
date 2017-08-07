@@ -1,0 +1,84 @@
+
+@import '../styles/colors';
+
+$success-animation-color: $mantis;
+$dot-animation-dot-color: $gallery;
+$dot-animation-size: 10px;
+$dot-animation-margin: 3px;
+
+%success-animation {
+    polyline {
+        animation: succesIconAnim .7s ease-in .3s 1;
+        animation-fill-mode: forwards;
+        stroke-width: 6;
+        stroke-linejoin: round;
+        stroke-linecap: round;
+        stroke-dasharray: 40;
+        stroke-dashoffset: 40;
+        stroke: $success-animation-color;
+        fill: none;
+    }
+
+    @keyframes succesIconAnim {
+        from {
+            stroke-dashoffset: 40;
+        }
+
+        to {
+            stroke-dashoffset: 0;
+        }
+    }
+}
+
+%dot-animation {
+    display: inline-block;
+    animation: dotAnim 1.2s ease-in-out both infinite;
+    margin: 0 1px;
+    border-radius: 50%;
+    box-shadow: inset 0 0 1px rgba(0, 0, 0, .10);
+    background-color: $dot-animation-dot-color;
+    width: $dot-animation-size;
+    height: $dot-animation-size;
+
+    @keyframes dotAnim {
+        0% {
+            transform: scale(.7);
+            opacity: .1;
+        }
+
+        30% {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        100% {
+            transform: scale(.7);
+            opacity: .1;
+        }
+    }
+}
+
+.dot-animation {
+    @extend %dot-animation;
+    position: relative;
+    animation-delay: .2s;
+
+    &:before {
+        @extend %dot-animation;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: - ($dot-animation-size + $dot-animation-margin);
+        content: '';
+    }
+
+    &:after {
+        @extend %dot-animation;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: $dot-animation-size + $dot-animation-margin;
+        animation-delay: .4s;
+        content: '';
+    }
+}
