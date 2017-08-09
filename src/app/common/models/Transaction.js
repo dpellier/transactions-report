@@ -47,6 +47,10 @@ function TransactionFactory(ERRORS) {
          *
          * @description
          * Set the error type on the Transaction.
+         *
+         * @param {string} errorType - The type to set.
+         *
+         * @returns {void}
          */
         setError(errorType) {
             this._error = errorType;

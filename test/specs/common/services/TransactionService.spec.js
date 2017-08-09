@@ -84,6 +84,34 @@ describe('Transaction Service', () => {
         });
     });
 
+    describe('xmlDocumentToTransactions', () => {
+        let document;
+        let record;
+
+        beforeEach(() => {
+            record = jasmine.createSpyObj('records', ['getAttribute', 'getElementsByTagName']);
+            record.getElementsByTagName.and.returnValue([{textContent: ''}]);
+
+            document = jasmine.createSpyObj('document', ['getElementsByTagName']);
+            document.getElementsByTagName.and.returnValue([record]);
+        });
+
+        it('should return list of Transaction', () => {
+            const transactions = service.xmlDocumentToTransactions(document);
+
+            expect(document.getElementsByTagName).toHaveBeenCalledWith('record');
+            expect(record.getAttribute).toHaveBeenCalledWith('reference');
+            expect(record.getElementsByTagName).toHaveBeenCalledWith('accountNumber');
+            expect(record.getElementsByTagName).toHaveBeenCalledWith('description');
+            expect(record.getElementsByTagName).toHaveBeenCalledWith('startBalance');
+            expect(record.getElementsByTagName).toHaveBeenCalledWith('mutation');
+            expect(record.getElementsByTagName).toHaveBeenCalledWith('endBalance');
+            transactions.forEach((t) => {
+                expect(t instanceof Transaction).toBe(true);
+            });
+        });
+    });
+
     describe('csvLinesToTransaction', () => {
         it('should return list of Transaction', () => {
             const lines = [['reference', 'accountNumber', 'description', '0', '+10', '10']];

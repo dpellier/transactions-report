@@ -33,6 +33,10 @@ class TransactionService {
      *
      * @description
      * Build a report from the given transactions.
+     *
+     * @param {[Transaction]} transactions - The transactions to validate.
+     *
+     * @returns {void}
      */
     validate(transactions) {
         this._reset();
@@ -56,10 +60,38 @@ class TransactionService {
 
     /**
      * @ngdoc method
+     * @name xmlDocumentToTransactions
+     *
+     * @description
+     * Transform a xml document to an array of Transaction.
+     *
+     * @param {Document} document - The XML parsed document.
+     *
+     * @returns {array} The array of Transactions.
+     */
+    xmlDocumentToTransactions(document) {
+        const records = document.getElementsByTagName('record');
+
+        return Array.prototype.map.call(records, (record) => {
+            return new this.Transaction([
+                record.getAttribute('reference'),
+                record.getElementsByTagName('accountNumber')[0].textContent,
+                record.getElementsByTagName('description')[0].textContent,
+                record.getElementsByTagName('startBalance')[0].textContent,
+                record.getElementsByTagName('mutation')[0].textContent,
+                record.getElementsByTagName('endBalance')[0].textContent
+            ]);
+        });
+    }
+
+    /**
+     * @ngdoc method
      * @name csvLinesToTransaction
      *
      * @description
      * Transform an array of object to an array of Transaction.
+     *
+     * @param {array} lines - The csv line objects.
      *
      * @returns {array} The array of Transactions.
      */
@@ -74,6 +106,8 @@ class TransactionService {
      *
      * @description
      * Reset the report.
+     *
+     * @returns {void}
      */
     _reset() {
         this.report = {
@@ -88,6 +122,10 @@ class TransactionService {
      *
      * @description
      * Add a duplicate error to the report.
+     *
+     * @param {Transaction} transaction - The transaction to add to the report errors.
+     *
+     * @returns {void}
      */
     _addDuplicateError(transaction) {
         transaction.setError(this.ERRORS.duplicate);
@@ -100,6 +138,10 @@ class TransactionService {
      *
      * @description
      * Add a mutation error to the report.
+     *
+     * @param {Transaction} transaction - The transaction to add to the report errors.
+     *
+     * @returns {void}
      */
     _addMutationError(transaction) {
         transaction.setError(this.ERRORS.mutation);
@@ -112,6 +154,10 @@ class TransactionService {
      *
      * @description
      * Add a success to the report.
+     *
+     * @param {Transaction} transaction - The transaction to add to the report successes.
+     *
+     * @returns {void}
      */
     _addSuccess(transaction) {
         this.report.ok.push(transaction);
