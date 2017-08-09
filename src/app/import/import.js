@@ -17,11 +17,12 @@ const ANIMATION_DELAY = 2500;
  */
 class ImportCtrl {
     // @ngInject
-    constructor($state, $timeout, fileService, transactionService) {
+    constructor($state, $timeout, fileService, transactionService, FILE_TYPES) {
         this.$state = $state;
         this.$timeout = $timeout;
         this.fileService = fileService;
         this.transactionService = transactionService;
+        this.FILE_TYPES = FILE_TYPES;
 
         this.state = STATES.initial;
         this.file = null;
@@ -50,7 +51,7 @@ class ImportCtrl {
      * @returns {boolean} True if the state is UPLOADED.
      */
     isOnUploadedState() {
-        return this.state === STATES.uploaded || this.state === STATES.validating;
+        return this.state === STATES.uploaded;
     }
 
     /**
@@ -58,13 +59,28 @@ class ImportCtrl {
      * @name onFileUpload
      *
      * @description
-     * On file change, transform its content to an array Transactions.
+     * On file change, transform its content to an array of Transactions.
+     *
+     * @returns {void}
      */
     onFileUpload() {
         this.state = STATES.uploaded;
+        let transactions = [];
 
-        const csvLines = this.fileService.processCsv(this.file);
-        const transactions = this.transactionService.csvLinesToTransaction(csvLines);
+        switch (this.file.type) {
+            case this.FILE_TYPES.xml:
+                transactions = this.transactionService.xmlDocumentToTransactions(
+                    this.fileService.processXml(this.file.content)
+                );
+                break;
+            case this.FILE_TYPES.csv:
+                transactions = this.transactionService.csvLinesToTransaction(
+                    this.fileService.processCsv(this.file.content)
+                );
+                break;
+            default:
+                break;
+        }
 
         this.validate(transactions);
     }
@@ -75,6 +91,10 @@ class ImportCtrl {
      *
      * @description
      * Generate the transactions report and redirect to report page.
+     *
+     * @param {[Transaction]} transactions - The transactions to validate.
+     *
+     * @returns {void}
      */
     validate(transactions) {
         this.transactionService.validate(transactions);

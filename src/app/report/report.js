@@ -23,6 +23,8 @@ class ReportCtrl {
      *
      * @description
      * Redirect to the import view.
+     *
+     * @returns {void}
      */
     back() {
         this.$state.go('app.import');

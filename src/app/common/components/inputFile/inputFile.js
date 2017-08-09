@@ -33,7 +33,10 @@ class InputFileCtrl {
         if (file) {
             return this.fileService.readAsText(file)
                 .then((content) => {
-                    this.ngModel.$setViewValue(content);
+                    this.ngModel.$setViewValue({
+                        content: content,
+                        type: file.type
+                    });
                 });
         }
         return this.$q.reject();

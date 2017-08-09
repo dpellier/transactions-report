@@ -3,7 +3,9 @@ describe('InputFile Component', () => {
     beforeEach(angular.mock.module('transactions-report-common'));
 
     const content = 'some content';
-    const file = 'some file';
+    const file = {
+        type: 'text/csv'
+    };
 
     let controller;
     let $rootScope;
@@ -64,7 +66,10 @@ describe('InputFile Component', () => {
 
             controller.onUpload(event).then(() => {
                 expect(fileService.readAsText).toHaveBeenCalledWith(file);
-                expect(controller.ngModel.$setViewValue).toHaveBeenCalledWith(content);
+                expect(controller.ngModel.$setViewValue).toHaveBeenCalledWith({
+                    content: content,
+                    type: file.type
+                });
             }).then(done, done.fail);
 
             $rootScope.$digest();
